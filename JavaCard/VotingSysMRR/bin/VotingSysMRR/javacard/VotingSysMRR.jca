@@ -1,0 +1,2600 @@
+// converted by version  [v3.0.4]
+// on Sat May 29 17:41:58 CEST 2021
+
+.package VotingSysMRR {
+	.aid 0x99:0x99:0x99:0x99:0x99;
+	.version 1.0;
+
+	.imports {
+		0xA0:0x0:0x0:0x0:0x62:0x1:0x1 1.5;		//javacard/framework
+		0xA0:0x0:0x0:0x0:0x62:0x1:0x2 1.5;		//javacard/security
+		0xA0:0x0:0x0:0x0:0x62:0x2:0x1 1.5;		//javacardx/crypto
+		0xA0:0x0:0x0:0x0:0x62:0x0:0x1 1.0;		//java/lang
+	}
+
+	.applet {
+		0x99:0x99:0x99:0x99:0x99:0x0 VotingSysMRR;
+	}
+
+	.constantPool {
+		// 0
+		instanceFieldRef byte[] VotingSysMRR/firstName;
+		// 1
+		instanceFieldRef byte[] VotingSysMRR/lastName;
+		// 2
+		instanceFieldRef byte[] VotingSysMRR/birthDate;
+		// 3
+		instanceFieldRef byte[] VotingSysMRR/tmpPIN;
+		// 4
+		instanceFieldRef byte VotingSysMRR/initialized;
+		// 5
+		instanceFieldRef 1.14 VotingSysMRR/rng;
+		// 6
+		instanceFieldRef byte[] VotingSysMRR/rndBuffer;
+		// 7
+		instanceFieldRef byte[] VotingSysMRR/cardID;
+		// 8
+		instanceFieldRef byte[] VotingSysMRR/tempBuffer;
+		// 9
+		instanceFieldRef byte[] VotingSysMRR/flags;
+		// 10
+		instanceFieldRef byte[] VotingSysMRR/rsaPubKey;
+		// 11
+		instanceFieldRef byte[] VotingSysMRR/rsaPriKey;
+		// 12
+		instanceFieldRef short VotingSysMRR/rsaPubKeyLen;
+		// 13
+		instanceFieldRef short VotingSysMRR/rsaPriKeyLen;
+		// 14
+		instanceFieldRef boolean VotingSysMRR/isRSAPriKeyCRT;
+		// 15
+		instanceFieldRef 1.15 VotingSysMRR/rsaSignature;
+		// 16
+		instanceFieldRef 2.1 VotingSysMRR/rsaCipher;
+		// 17
+		instanceFieldRef 1.26 VotingSysMRR/sha1;
+		// 18
+		instanceFieldRef 1.26 VotingSysMRR/sha256;
+		// 19
+		instanceFieldRef 1.26 VotingSysMRR/sha512;
+		// 20
+		instanceFieldRef 0.9 VotingSysMRR/pin;
+		// 21
+		instanceFieldRef byte VotingSysMRR/sex;
+		// 22
+		staticMethodRef 1.14.0(B)Ljavacard/security/RandomData;;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
+			.descriptor	Ljavacard/security/RandomData;	1.14;
+
+		// 23
+		staticMethodRef 0.3.0()V;		// javacard/framework/Applet.<init>()V
+		// 24
+		staticMethodRef 2.1.0(BZ)Ljavacardx/crypto/Cipher;;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
+			.descriptor	Ljavacardx/crypto/Cipher;	2.1;
+
+		// 25
+		staticMethodRef 0.8.18()V;		// javacard/framework/JCSystem.requestObjectDeletion()V
+		// 26
+		.classRef 0.9;		// javacard/framework/OwnerPIN
+		// 27
+		staticMethodRef 0.9.0(BB)V;		// javacard/framework/OwnerPIN.<init>(BB)V
+		// 28
+		staticMethodRef 0.8.13(SB)[B;		// javacard/framework/JCSystem.makeTransientByteArray(SB)[B
+		// 29
+		virtualMethodRef 0.9.8([BSB)V;		// update([BSB)V
+		// 30
+		virtualMethodRef 0.3.1()V;		// register()V
+		// 31
+		.classRef VotingSysMRR;
+		// 32
+		staticMethodRef VotingSysMRR/<init>([BSB)V;
+		// 33
+		virtualMethodRef 0.9.2()B;		// getTriesRemaining()B
+		// 34
+		virtualMethodRef 0.9.5()V;		// reset()V
+		// 35
+		virtualMethodRef 0.10.1()[B;		// getBuffer()[B
+		// 36
+		virtualMethodRef 0.3.3()Z;		// selectingApplet()Z
+		// 37
+		staticMethodRef 0.7.1(S)V;		// javacard/framework/ISOException.throwIt(S)V
+		// 38
+		staticMethodRef VotingSysMRR/setFirstName(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 39
+		staticMethodRef VotingSysMRR/setLastName(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 40
+		staticMethodRef VotingSysMRR/setSex(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 41
+		staticMethodRef VotingSysMRR/setBirthDate(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 42
+		staticMethodRef VotingSysMRR/getFirstName(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 43
+		staticMethodRef VotingSysMRR/getLastName(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 44
+		staticMethodRef VotingSysMRR/getBirthDate(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 45
+		staticMethodRef VotingSysMRR/getSexValue(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 46
+		staticMethodRef VotingSysMRR/updatePIN(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 47
+		staticMethodRef VotingSysMRR/verifyPIN(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 48
+		staticMethodRef VotingSysMRR/resetPIN(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 49
+		staticMethodRef VotingSysMRR/initialize(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 50
+		staticMethodRef VotingSysMRR/isInitialized(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 51
+		staticMethodRef VotingSysMRR/getCardID(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 52
+		staticMethodRef VotingSysMRR/getPINAttempts(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 53
+		staticMethodRef VotingSysMRR/generateHash(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 54
+		staticMethodRef VotingSysMRR/genRsaKeyPair(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 55
+		staticMethodRef VotingSysMRR/getRsaPubKey(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 56
+		staticMethodRef VotingSysMRR/getRsaPriKey(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 57
+		staticMethodRef VotingSysMRR/setRsaPubKey(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 58
+		staticMethodRef VotingSysMRR/setRsaPriKey(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 59
+		staticMethodRef VotingSysMRR/rsaSign(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 60
+		staticMethodRef VotingSysMRR/rsaVerify(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 61
+		staticMethodRef VotingSysMRR/doRSACipher(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 62
+		virtualMethodRef 0.10.6()S;		// setIncomingAndReceive()S
+		// 63
+		staticMethodRef 1.11.2(BZ)Ljavacard/security/InitializedMessageDigest;;		// javacard/security/MessageDigest.getInitializedMessageDigestInstance(BZ)Ljavacard/security/InitializedMessageDigest;
+			.descriptor	Ljavacard/security/InitializedMessageDigest;	1.26;
+
+		// 64
+		staticMethodRef 0.16.2([BS[BSS)S;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+		// 65
+		virtualMethodRef 0.10.8(SS)V;		// setOutgoingAndSend(SS)V
+		// 66
+		virtualMethodRef 0.9.1([BSB)Z;		// check([BSB)Z
+		// 67
+		virtualMethodRef 0.9.6()V;		// resetAndUnblock()V
+		// 68
+		virtualMethodRef 1.14.1([BSS)V;		// generateData([BSS)V
+		// 69
+		virtualMethodRef 1.26.4()V;		// reset()V
+		// 70
+		virtualMethodRef 1.26.5([BSS)V;		// update([BSS)V
+		// 71
+		virtualMethodRef 1.26.1([BSS[BS)S;		// doFinal([BSS[BS)S
+		// 72
+		staticMethodRef 0.16.3([BSSB)S;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+		// 73
+		staticMethodRef 1.13.0(BSZ)Ljavacard/security/Key;;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+			.descriptor	Ljavacard/security/Key;	1.0;
+
+		// 74
+		.classRef 1.9;		// javacard/security/RSAPublicKey
+		// 75
+		virtualMethodRef 2.1.3(Ljavacard/security/Key;B)V;		// init(Ljavacard/security/Key;B)V
+			.descriptor	Ljavacard/security/Key;	1.0;
+
+		// 76
+		virtualMethodRef 2.1.5([BSS[BS)S;		// update([BSS[BS)S
+		// 77
+		virtualMethodRef 2.1.1([BSS[BS)S;		// doFinal([BSS[BS)S
+		// 78
+		.classRef 1.8;		// javacard/security/RSAPrivateKey
+		// 79
+		.classRef 1.7;		// javacard/security/RSAPrivateCrtKey
+		// 80
+		staticMethodRef VotingSysMRR/getRsaPriKeyComponent(B[BS)S;
+		// 81
+		staticMethodRef 0.16.6([BSS)S;		// javacard/framework/Util.setShort([BSS)S
+		// 82
+		staticMethodRef 0.16.4([BS)S;		// javacard/framework/Util.getShort([BS)S
+		// 83
+		.classRef 1.16;		// javacard/security/KeyPair
+		// 84
+		staticMethodRef 1.16.0(BS)V;		// javacard/security/KeyPair.<init>(BS)V
+		// 85
+		virtualMethodRef 1.16.3()Ljavacard/security/PublicKey;;		// getPublic()Ljavacard/security/PublicKey;
+			.descriptor	Ljavacard/security/PublicKey;	1.3;
+
+		// 86
+		virtualMethodRef 1.16.1()V;		// genKeyPair()V
+		// 87
+		staticMethodRef 0.8.1()V;		// javacard/framework/JCSystem.beginTransaction()V
+		// 88
+		staticMethodRef 0.8.2()V;		// javacard/framework/JCSystem.commitTransaction()V
+		// 89
+		virtualMethodRef 1.16.2()Ljavacard/security/PrivateKey;;		// getPrivate()Ljavacard/security/PrivateKey;
+			.descriptor	Ljavacard/security/PrivateKey;	1.2;
+
+		// 90
+		staticMethodRef 1.15.0(BZ)Ljavacard/security/Signature;;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
+			.descriptor	Ljavacard/security/Signature;	1.15;
+
+		// 91
+		virtualMethodRef 1.15.3(Ljavacard/security/Key;B)V;		// init(Ljavacard/security/Key;B)V
+			.descriptor	Ljavacard/security/Key;	1.0;
+
+		// 92
+		virtualMethodRef 1.15.6([BSS)V;		// update([BSS)V
+		// 93
+		virtualMethodRef 1.15.5([BSS[BS)S;		// sign([BSS[BS)S
+		// 94
+		virtualMethodRef 1.15.7([BSS[BSS)Z;		// verify([BSS[BSS)Z
+	}
+
+	.class public VotingSysMRR 0 extends 0.3 {		// extends javacard/framework/Applet
+
+		.fields {
+			private byte[] firstName 0;		// [B
+			private byte[] lastName 1;		// [B
+			private byte[] birthDate 2;		// [B
+			private byte[] tmpPIN 3;		// [B
+			private 1.14 rng 4;		// Ljavacard/security/RandomData;
+			private byte[] rndBuffer 5;		// [B
+			private byte[] cardID 6;		// [B
+			private 1.26 sha1 7;		// Ljavacard/security/InitializedMessageDigest;
+			private 1.26 sha256 8;		// Ljavacard/security/InitializedMessageDigest;
+			private 1.26 sha512 9;		// Ljavacard/security/InitializedMessageDigest;
+			private byte[] tempBuffer 10;		// [B
+			private byte[] rsaPubKey 11;		// [B
+			private byte[] rsaPriKey 12;		// [B
+			private 2.1 rsaCipher 13;		// Ljavacardx/crypto/Cipher;
+			private 1.15 rsaSignature 14;		// Ljavacard/security/Signature;
+			private byte[] flags 15;		// [B
+			 0.9 pin 16;		// Ljavacard/framework/OwnerPIN;
+			private byte sex 17;		// B
+			private byte initialized 18;		// B
+			private short rsaPubKeyLen 19;		// S
+			private short rsaPriKeyLen 20;		// S
+			private boolean isRSAPriKeyCRT 21;		// Z
+			static final byte VoterCard_CLA = -80;		// B
+			static final byte REG_FIRST_NAME = 1;		// B
+			static final byte REG_LAST_NAME = 2;		// B
+			static final byte REG_SEX = 3;		// B
+			static final byte REG_BIRTH_DATE = 4;		// B
+			static final byte GET_FIRST_NAME = 5;		// B
+			static final byte GET_LAST_NAME = 6;		// B
+			static final byte GET_BIRTH_DATE = 7;		// B
+			static final byte GET_SEX_VALUE = 8;		// B
+			static final byte UPDATE_PIN = 9;		// B
+			static final byte VERIFY_PIN = 10;		// B
+			static final byte RESET_PIN = 11;		// B
+			static final byte INITIALIZE = 12;		// B
+			static final byte IS_INITIALIZED = 13;		// B
+			static final byte GET_CARD_ID = 14;		// B
+			static final byte GET_PIN_ATTEMPTS = 15;		// B
+			static final byte GEN_HASH = -96;		// B
+			static final byte GEN_RSA_KEYPAIR = 48;		// B
+			static final byte GET_RSA_PUBKEY = 49;		// B
+			static final byte GET_RSA_PRIKEY = 50;		// B
+			static final byte SET_RSA_PUBKEY = 51;		// B
+			static final byte SET_RSA_PRIKEY = 52;		// B
+			static final byte RSA_SIGN = 53;		// B
+			static final byte RSA_VERIFY = 54;		// B
+			static final byte DO_RSA_CIPHER = 55;		// B
+			static final byte PIN_TRY_LIMIT = 10;		// B
+			static final byte PIN_SIZE = 5;		// B
+			private static final byte ID_N = 0;		// B
+			private static final byte ID_D = 1;		// B
+			private static final byte ID_P = 2;		// B
+			private static final byte ID_Q = 3;		// B
+			private static final byte ID_PQ = 4;		// B
+			private static final byte ID_DP1 = 5;		// B
+			private static final byte ID_DQ1 = 6;		// B
+			private static final short OFF_INS = 0;		// S
+			private static final short OFF_P1 = 1;		// S
+			private static final short OFF_P2 = 2;		// S
+			private static final short OFF_LEN = 3;		// S
+			private static final short FLAGS_SIZE = 5;		// S
+			static final short SW_VERIFICATION_FAILED = 25344;		// S
+			static final short SW_PIN_VERIFICATION_REQUIRED = 25345;		// S
+			static final short SW_ALREADY_INITIALIZED = 25345;		// S
+			private static final short SW_REFERENCE_DATA_NOT_FOUND = 27272;		// S
+		}
+
+		.publicMethodTable 4 {
+			equals(Ljava/lang/Object;)Z;
+			register()V;
+			register([BSB)V;
+			selectingApplet()Z;
+			deselect()V;
+			getShareableInterfaceObject(Ljavacard/framework/AID;B)Ljavacard/framework/Shareable;;
+			select()Z;
+			process(Ljavacard/framework/APDU;)V;
+		}
+
+		.packageMethodTable 0 {
+		}
+
+		.method private <init>([BSB)V {
+			.stack 5;
+			.locals 3;
+
+				L0:	aload_0;
+					invokespecial 23;		// javacard/framework/Applet.<init>()V
+					aload_0;
+					bspush 30;
+					newarray 11;
+					putfield_a 0;		// reference VotingSysMRR/VotingSysMRR.firstName
+					aload_0;
+					bspush 30;
+					newarray 11;
+					putfield_a 1;		// reference VotingSysMRR/VotingSysMRR.lastName
+					aload_0;
+					sconst_4;
+					newarray 11;
+					putfield_a 2;		// reference VotingSysMRR/VotingSysMRR.birthDate
+					aload_0;
+					sconst_5;
+					newarray 11;
+					putfield_a 3;		// reference VotingSysMRR/VotingSysMRR.tmpPIN
+					aload_0;
+					sconst_0;
+					putfield_b 4;		// byte VotingSysMRR/VotingSysMRR.initialized
+					aload_0;
+					sconst_2;
+					invokestatic 22;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
+					putfield_a 5;		// reference VotingSysMRR/VotingSysMRR.rng
+					aload_0;
+					sconst_2;
+					newarray 11;
+					putfield_a 6;		// reference VotingSysMRR/VotingSysMRR.rndBuffer
+					aload_0;
+					bspush 8;
+					newarray 11;
+					putfield_a 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					aload_0;
+					sspush 256;
+					sconst_2;
+					invokestatic 28;		// javacard/framework/JCSystem.makeTransientByteArray(SB)[B
+					putfield_a 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					aload_0;
+					sconst_5;
+					sconst_2;
+					invokestatic 28;		// javacard/framework/JCSystem.makeTransientByteArray(SB)[B
+					putfield_a 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					aload_0;
+					sspush 288;
+					newarray 11;
+					putfield_a 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					aload_0;
+					sspush 640;
+					newarray 11;
+					putfield_a 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					aload_0;
+					sconst_0;
+					putfield_s 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					aload_0;
+					sconst_0;
+					putfield_s 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					aload_0;
+					sconst_0;
+					putfield_b 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					aload_0;
+					aconst_null;
+					putfield_a 15;		// reference VotingSysMRR/VotingSysMRR.rsaSignature
+					aload_0;
+					bspush 10;
+					sconst_0;
+					invokestatic 24;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
+					putfield_a 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload_0;
+					sconst_5;
+					sconst_2;
+					invokestatic 28;		// javacard/framework/JCSystem.makeTransientByteArray(SB)[B
+					putfield_a 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					aload_0;
+					sconst_1;
+					sconst_0;
+					invokestatic 63;		// javacard/security/MessageDigest.getInitializedMessageDigestInstance(BZ)Ljavacard/security/InitializedMessageDigest;
+					putfield_a 17;		// reference VotingSysMRR/VotingSysMRR.sha1
+					aload_0;
+					sconst_4;
+					sconst_0;
+					invokestatic 63;		// javacard/security/MessageDigest.getInitializedMessageDigestInstance(BZ)Ljavacard/security/InitializedMessageDigest;
+					putfield_a 18;		// reference VotingSysMRR/VotingSysMRR.sha256
+					aload_0;
+					bspush 6;
+					sconst_0;
+					invokestatic 63;		// javacard/security/MessageDigest.getInitializedMessageDigestInstance(BZ)Ljavacard/security/InitializedMessageDigest;
+					putfield_a 19;		// reference VotingSysMRR/VotingSysMRR.sha512
+					invokestatic 25;		// javacard/framework/JCSystem.requestObjectDeletion()V
+					aload_0;
+					new 26;		// javacard/framework/OwnerPIN
+					dup;
+					bspush 10;
+					sconst_5;
+					invokespecial 27;		// javacard/framework/OwnerPIN.<init>(BB)V
+					putfield_a 20;		// reference VotingSysMRR/VotingSysMRR.pin
+					aload_1;
+					sload_2;
+					baload;
+					sstore 4;
+				L1:	sload_2;
+					sload 4;
+					sadd;
+					sconst_1;
+					sadd;
+					sstore_2;
+					aload_1;
+					sload_2;
+					baload;
+					sstore 5;
+				L2:	sload_2;
+					sload 5;
+					sadd;
+					sconst_1;
+					sadd;
+					sstore_2;
+					aload_1;
+					sload_2;
+					baload;
+					sstore 6;
+				L3:	getfield_a_this 20;		// reference VotingSysMRR/VotingSysMRR.pin
+					aload_1;
+					sload_2;
+					sconst_1;
+					sadd;
+					sload 6;
+					invokevirtual 29;		// update([BSB)V
+					aload_0;
+					invokevirtual 30;		// register()V
+					return;
+		}
+
+		.method public static install([BSB)V 0 {
+			.stack 5;
+			.locals 0;
+
+				L0:	new 31;		// VotingSysMRR/VotingSysMRR
+					dup;
+					aload_0;
+					sload_1;
+					sload_2;
+					invokespecial 32;		// VotingSysMRR/VotingSysMRR.<init>([BSB)V
+					pop;
+					return;
+		}
+
+		.method public select()Z 6 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 20;		// reference VotingSysMRR/VotingSysMRR.pin
+					invokevirtual 33;		// getTriesRemaining()B
+					ifne L2;
+				L1:	sconst_0;
+					sreturn;
+				L2:	sconst_1;
+					sreturn;
+		}
+
+		.method public deselect()V 4 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 20;		// reference VotingSysMRR/VotingSysMRR.pin
+					invokevirtual 34;		// reset()V
+					return;
+		}
+
+		.method public process(Ljavacard/framework/APDU;)V 7 {
+			.stack 2;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_0;
+					invokevirtual 36;		// selectingApplet()Z
+					ifeq L3;
+				L2:	return;
+				L3:	aload_2;
+					sconst_0;
+					baload;
+					bspush -80;
+					if_scmpeq L5;
+				L4:	sspush 28160;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L5:	aload_2;
+					sconst_1;
+					baload;
+					slookupswitch L30 24 -96 L21 1 L6 2 L7 3 L8 4 L9 5 L10 6 L11 7 L12 8 L13 9 L14 10 L15 11 L16 12 L17 13 L18 14 L19 15 L20 48 L22 49 L23 50 L24 51 L25 52 L26 53 L27 54 L28 55 L29;
+				L6:	aload_0;
+					aload_1;
+					invokespecial 38;		// VotingSysMRR/VotingSysMRR.setFirstName(Ljavacard/framework/APDU;)V
+					goto_w L31;
+				L7:	aload_0;
+					aload_1;
+					invokespecial 39;		// VotingSysMRR/VotingSysMRR.setLastName(Ljavacard/framework/APDU;)V
+					goto_w L31;
+				L8:	aload_0;
+					aload_1;
+					invokespecial 40;		// VotingSysMRR/VotingSysMRR.setSex(Ljavacard/framework/APDU;)V
+					goto_w L31;
+				L9:	aload_0;
+					aload_1;
+					invokespecial 41;		// VotingSysMRR/VotingSysMRR.setBirthDate(Ljavacard/framework/APDU;)V
+					goto_w L31;
+				L10:	aload_0;
+					aload_1;
+					invokespecial 42;		// VotingSysMRR/VotingSysMRR.getFirstName(Ljavacard/framework/APDU;)V
+					goto_w L31;
+				L11:	aload_0;
+					aload_1;
+					invokespecial 43;		// VotingSysMRR/VotingSysMRR.getLastName(Ljavacard/framework/APDU;)V
+					goto_w L31;
+				L12:	aload_0;
+					aload_1;
+					invokespecial 44;		// VotingSysMRR/VotingSysMRR.getBirthDate(Ljavacard/framework/APDU;)V
+					goto L31;
+				L13:	aload_0;
+					aload_1;
+					invokespecial 45;		// VotingSysMRR/VotingSysMRR.getSexValue(Ljavacard/framework/APDU;)V
+					goto L31;
+				L14:	aload_0;
+					aload_1;
+					invokespecial 46;		// VotingSysMRR/VotingSysMRR.updatePIN(Ljavacard/framework/APDU;)V
+					goto L31;
+				L15:	aload_0;
+					aload_1;
+					invokespecial 47;		// VotingSysMRR/VotingSysMRR.verifyPIN(Ljavacard/framework/APDU;)V
+					goto L31;
+				L16:	aload_0;
+					aload_1;
+					invokespecial 48;		// VotingSysMRR/VotingSysMRR.resetPIN(Ljavacard/framework/APDU;)V
+					goto L31;
+				L17:	aload_0;
+					aload_1;
+					invokespecial 49;		// VotingSysMRR/VotingSysMRR.initialize(Ljavacard/framework/APDU;)V
+					goto L31;
+				L18:	aload_0;
+					aload_1;
+					invokespecial 50;		// VotingSysMRR/VotingSysMRR.isInitialized(Ljavacard/framework/APDU;)V
+					goto L31;
+				L19:	aload_0;
+					aload_1;
+					invokespecial 51;		// VotingSysMRR/VotingSysMRR.getCardID(Ljavacard/framework/APDU;)V
+					goto L31;
+				L20:	aload_0;
+					aload_1;
+					invokespecial 52;		// VotingSysMRR/VotingSysMRR.getPINAttempts(Ljavacard/framework/APDU;)V
+					goto L31;
+				L21:	aload_0;
+					aload_1;
+					invokespecial 53;		// VotingSysMRR/VotingSysMRR.generateHash(Ljavacard/framework/APDU;)V
+					goto L31;
+				L22:	aload_0;
+					aload_1;
+					invokespecial 54;		// VotingSysMRR/VotingSysMRR.genRsaKeyPair(Ljavacard/framework/APDU;)V
+					goto L31;
+				L23:	aload_0;
+					aload_1;
+					invokespecial 55;		// VotingSysMRR/VotingSysMRR.getRsaPubKey(Ljavacard/framework/APDU;)V
+					goto L31;
+				L24:	aload_0;
+					aload_1;
+					invokespecial 56;		// VotingSysMRR/VotingSysMRR.getRsaPriKey(Ljavacard/framework/APDU;)V
+					goto L31;
+				L25:	aload_0;
+					aload_1;
+					invokespecial 57;		// VotingSysMRR/VotingSysMRR.setRsaPubKey(Ljavacard/framework/APDU;)V
+					goto L31;
+				L26:	aload_0;
+					aload_1;
+					invokespecial 58;		// VotingSysMRR/VotingSysMRR.setRsaPriKey(Ljavacard/framework/APDU;)V
+					goto L31;
+				L27:	aload_0;
+					aload_1;
+					invokespecial 59;		// VotingSysMRR/VotingSysMRR.rsaSign(Ljavacard/framework/APDU;)V
+					goto L31;
+				L28:	aload_0;
+					aload_1;
+					invokespecial 60;		// VotingSysMRR/VotingSysMRR.rsaVerify(Ljavacard/framework/APDU;)V
+					goto L31;
+				L29:	aload_0;
+					aload_1;
+					invokespecial 61;		// VotingSysMRR/VotingSysMRR.doRSACipher(Ljavacard/framework/APDU;)V
+					goto L31;
+				L30:	sspush 27904;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L31:	return;
+		}
+
+		.method private setFirstName(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 3;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_2;
+					sconst_4;
+					baload;
+					sstore_3;
+				L2:	sconst_0;
+					sstore 4;
+				L3:	sload 4;
+					sload_3;
+					if_scmpge L5;
+				L4:	getfield_a_this 0;		// reference VotingSysMRR/VotingSysMRR.firstName
+					sload 4;
+					aload_2;
+					sconst_5;
+					sload 4;
+					s2b;
+					sadd;
+					baload;
+					bastore;
+					sinc 4 1;
+					goto L3;
+				L5:	return;
+		}
+
+		.method private setLastName(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 3;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_2;
+					sconst_4;
+					baload;
+					sstore_3;
+				L2:	sconst_0;
+					sstore 4;
+				L3:	sload 4;
+					sload_3;
+					if_scmpge L5;
+				L4:	getfield_a_this 1;		// reference VotingSysMRR/VotingSysMRR.lastName
+					sload 4;
+					aload_2;
+					sconst_5;
+					sload 4;
+					s2b;
+					sadd;
+					baload;
+					bastore;
+					sinc 4 1;
+					goto L3;
+				L5:	return;
+		}
+
+		.method private setSex(Ljavacard/framework/APDU;)V {
+			.stack 3;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					pop;
+					aload_0;
+					aload_2;
+					sconst_5;
+					baload;
+					putfield_b 21;		// byte VotingSysMRR/VotingSysMRR.sex
+					return;
+		}
+
+		.method private setBirthDate(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 3;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_2;
+					sconst_4;
+					baload;
+					sstore_3;
+				L2:	sconst_0;
+					sstore 4;
+				L3:	sload 4;
+					sload_3;
+					if_scmpge L5;
+				L4:	getfield_a_this 2;		// reference VotingSysMRR/VotingSysMRR.birthDate
+					sload 4;
+					aload_2;
+					sconst_5;
+					sload 4;
+					s2b;
+					sadd;
+					baload;
+					bastore;
+					sinc 4 1;
+					goto L3;
+				L5:	return;
+		}
+
+		.method private getFirstName(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	getfield_a_this 0;		// reference VotingSysMRR/VotingSysMRR.firstName
+					sconst_0;
+					aload_2;
+					sconst_0;
+					getfield_a_this 0;		// reference VotingSysMRR/VotingSysMRR.firstName
+					arraylength;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					getfield_a_this 0;		// reference VotingSysMRR/VotingSysMRR.firstName
+					arraylength;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method private getLastName(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	getfield_a_this 1;		// reference VotingSysMRR/VotingSysMRR.lastName
+					sconst_0;
+					aload_2;
+					sconst_0;
+					getfield_a_this 1;		// reference VotingSysMRR/VotingSysMRR.lastName
+					arraylength;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					getfield_a_this 1;		// reference VotingSysMRR/VotingSysMRR.lastName
+					arraylength;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method private getBirthDate(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	getfield_a_this 2;		// reference VotingSysMRR/VotingSysMRR.birthDate
+					sconst_0;
+					aload_2;
+					sconst_0;
+					getfield_a_this 2;		// reference VotingSysMRR/VotingSysMRR.birthDate
+					arraylength;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					getfield_a_this 2;		// reference VotingSysMRR/VotingSysMRR.birthDate
+					arraylength;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method private getSexValue(Ljavacard/framework/APDU;)V {
+			.stack 3;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_2;
+					sconst_0;
+					getfield_b_this 21;		// byte VotingSysMRR/VotingSysMRR.sex
+					bastore;
+					aload_1;
+					sconst_0;
+					sconst_1;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method private updatePIN(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 3;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_2;
+					sconst_4;
+					baload;
+					sstore_3;
+				L2:	sconst_0;
+					sstore 4;
+				L3:	sload 4;
+					sload_3;
+					if_scmpge L5;
+				L4:	getfield_a_this 3;		// reference VotingSysMRR/VotingSysMRR.tmpPIN
+					sload 4;
+					aload_2;
+					sconst_5;
+					sload 4;
+					s2b;
+					sadd;
+					baload;
+					bastore;
+					sinc 4 1;
+					goto L3;
+				L5:	getfield_a_this 20;		// reference VotingSysMRR/VotingSysMRR.pin
+					getfield_a_this 3;		// reference VotingSysMRR/VotingSysMRR.tmpPIN
+					sconst_0;
+					getfield_a_this 3;		// reference VotingSysMRR/VotingSysMRR.tmpPIN
+					arraylength;
+					s2b;
+					invokevirtual 29;		// update([BSB)V
+					return;
+		}
+
+		.method private verifyPIN(Ljavacard/framework/APDU;)V {
+			.stack 4;
+			.locals 2;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					s2b;
+					sstore_3;
+				L2:	getfield_a_this 20;		// reference VotingSysMRR/VotingSysMRR.pin
+					aload_2;
+					sconst_5;
+					sload_3;
+					invokevirtual 66;		// check([BSB)Z
+					ifne L4;
+				L3:	sspush 25344;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L4:	return;
+		}
+
+		.method private resetPIN(Ljavacard/framework/APDU;)V {
+			.stack 1;
+			.locals 0;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	getfield_a_this 20;		// reference VotingSysMRR/VotingSysMRR.pin
+					invokevirtual 67;		// resetAndUnblock()V
+					return;
+		}
+
+		.method private initialize(Ljavacard/framework/APDU;)V {
+			.stack 4;
+			.locals 0;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	getfield_a_this 5;		// reference VotingSysMRR/VotingSysMRR.rng
+					getfield_a_this 6;		// reference VotingSysMRR/VotingSysMRR.rndBuffer
+					sconst_0;
+					sconst_2;
+					invokevirtual 68;		// generateData([BSS)V
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					sconst_0;
+					getfield_a_this 1;		// reference VotingSysMRR/VotingSysMRR.lastName
+					sconst_0;
+					baload;
+					bastore;
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					sconst_1;
+					getfield_a_this 0;		// reference VotingSysMRR/VotingSysMRR.firstName
+					sconst_0;
+					baload;
+					bastore;
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					sconst_2;
+					getfield_a_this 2;		// reference VotingSysMRR/VotingSysMRR.birthDate
+					sconst_2;
+					baload;
+					bastore;
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					sconst_3;
+					getfield_a_this 2;		// reference VotingSysMRR/VotingSysMRR.birthDate
+					sconst_3;
+					baload;
+					bastore;
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					sconst_4;
+					getfield_a_this 2;		// reference VotingSysMRR/VotingSysMRR.birthDate
+					sconst_1;
+					baload;
+					bastore;
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					sconst_5;
+					getfield_a_this 2;		// reference VotingSysMRR/VotingSysMRR.birthDate
+					sconst_0;
+					baload;
+					bastore;
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					bspush 6;
+					getfield_a_this 6;		// reference VotingSysMRR/VotingSysMRR.rndBuffer
+					sconst_0;
+					baload;
+					bastore;
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					bspush 7;
+					getfield_a_this 6;		// reference VotingSysMRR/VotingSysMRR.rndBuffer
+					sconst_1;
+					baload;
+					bastore;
+					aload_0;
+					sconst_1;
+					putfield_b 4;		// byte VotingSysMRR/VotingSysMRR.initialized
+					return;
+		}
+
+		.method private isInitialized(Ljavacard/framework/APDU;)V {
+			.stack 3;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_2;
+					sconst_0;
+					getfield_b_this 4;		// byte VotingSysMRR/VotingSysMRR.initialized
+					bastore;
+					aload_1;
+					sconst_0;
+					sconst_1;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method private getCardID(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					sconst_0;
+					aload_2;
+					sconst_0;
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					arraylength;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					getfield_a_this 7;		// reference VotingSysMRR/VotingSysMRR.cardID
+					arraylength;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method private getPINAttempts(Ljavacard/framework/APDU;)V {
+			.stack 3;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_2;
+				L1:	aload_2;
+					sconst_0;
+					getfield_a_this 20;		// reference VotingSysMRR/VotingSysMRR.pin
+					invokevirtual 33;		// getTriesRemaining()B
+					bastore;
+					aload_1;
+					sconst_0;
+					sconst_1;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method private generateHash(Ljavacard/framework/APDU;)V {
+			.stack 6;
+			.locals 7;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					sstore_2;
+				L1:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_3;
+				L2:	aload_3;
+					sconst_2;
+					baload;
+					sspush 128;
+					sand;
+					ifeq L4;
+				L3:	sconst_1;
+					goto L5;
+				L4:	sconst_0;
+				L5:	sstore 4;
+				L6:	aconst_null;
+					astore 5;
+				L7:	sconst_0;
+					sstore 6;
+				L8:	sconst_5;
+					sstore 7;
+				L9:	aload_3;
+					sconst_2;
+					baload;
+					bspush 127;
+					sand;
+					stableswitch L14 0 2 L10 L11 L12;
+				L10:	getfield_a_this 17;		// reference VotingSysMRR/VotingSysMRR.sha1
+					astore 5;
+					bspush 20;
+					sstore 6;
+					goto L15;
+				L11:	getfield_a_this 18;		// reference VotingSysMRR/VotingSysMRR.sha256
+					astore 5;
+					bspush 32;
+					sstore 6;
+					goto L15;
+				L12:	getfield_a_this 19;		// reference VotingSysMRR/VotingSysMRR.sha512
+					astore 5;
+					bspush 64;
+					sstore 6;
+					aload 5;
+					ifnonnull L15;
+				L13:	sspush 27013;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+					goto L15;
+				L14:	sspush 27270;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L15:	aload_3;
+					sconst_3;
+					baload;
+					ifne L17;
+				L16:	aload 5;
+					invokevirtual 69;		// reset()V
+				L17:	sload 4;
+					ifeq L19;
+				L18:	aload 5;
+					aload_3;
+					sload 7;
+					sload_2;
+					invokevirtual 70;		// update([BSS)V
+					goto L21;
+				L19:	aload 5;
+					aload_3;
+					sload 7;
+					sload_2;
+					aload_3;
+					sconst_0;
+					invokevirtual 71;		// doFinal([BSS[BS)S
+					sstore 8;
+				L20:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					aload_1;
+					sconst_0;
+					sload 8;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+				L21:	return;
+		}
+
+		.method private doRSACipher(Ljavacard/framework/APDU;)V {
+			.stack 6;
+			.locals 9;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					sstore_2;
+				L1:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_3;
+				L2:	aload_3;
+					sconst_2;
+					baload;
+					sstore 4;
+				L3:	sload 4;
+					sspush 128;
+					sand;
+					ifeq L5;
+				L4:	sconst_1;
+					goto L6;
+				L5:	sconst_0;
+				L6:	sstore 5;
+				L7:	sload 4;
+					sconst_1;
+					sand;
+					sconst_1;
+					if_scmpeq L9;
+				L8:	sconst_1;
+					goto L10;
+				L9:	sconst_0;
+				L10:	sstore 6;
+				L11:	sload 4;
+					bspush 8;
+					sand;
+					ifne L13;
+				L12:	sspush 1024;
+					goto L14;
+				L13:	sspush 2048;
+				L14:	sstore 7;
+				L15:	sload 4;
+					bspush 8;
+					sand;
+					ifne L17;
+				L16:	sspush 128;
+					goto L18;
+				L17:	sspush 256;
+				L18:	sstore 8;
+				L19:	sload_2;
+					ifgt L21;
+				L20:	sspush 26368;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L21:	sload 6;
+					ifeq L30;
+				L22:	sconst_4;
+					sload 7;
+					sconst_0;
+					invokestatic 73;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					checkcast 0 74;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					astore 9;
+				L23:	aload 9;
+					getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					sconst_0;
+					sload 8;
+					invokeinterface 4 74 7;		// javacard/security/RSAPublicKey
+					aload 9;
+					getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					sload 8;
+					sconst_3;
+					invokeinterface 4 74 6;		// javacard/security/RSAPublicKey
+					aload_3;
+					sconst_3;
+					baload;
+					ifne L25;
+				L24:	getfield_a_this 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload 9;
+					sconst_2;
+					invokevirtual 75;		// init(Ljavacard/security/Key;B)V
+				L25:	sload 5;
+					ifeq L27;
+				L26:	getfield_a_this 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload_3;
+					sconst_5;
+					sload_2;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokevirtual 76;		// update([BSS[BS)S
+					pop;
+					goto L29;
+				L27:	getfield_a_this 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload_3;
+					sconst_5;
+					sload_2;
+					aload_3;
+					sconst_0;
+					invokevirtual 77;		// doFinal([BSS[BS)S
+					sstore 10;
+				L28:	aload_1;
+					sconst_0;
+					sload 10;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+				L29:	goto_w L46;
+				L30:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifne L39;
+				L31:	sconst_5;
+					sload 7;
+					sconst_0;
+					invokestatic 73;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					checkcast 0 78;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
+					astore 9;
+				L32:	aload 9;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sconst_0;
+					sload 8;
+					invokeinterface 4 78 7;		// javacard/security/RSAPrivateKey
+					aload 9;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 8;
+					sload 8;
+					invokeinterface 4 78 6;		// javacard/security/RSAPrivateKey
+					aload_3;
+					sconst_3;
+					baload;
+					ifne L34;
+				L33:	getfield_a_this 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload 9;
+					sconst_1;
+					invokevirtual 75;		// init(Ljavacard/security/Key;B)V
+				L34:	sload 5;
+					ifeq L36;
+				L35:	getfield_a_this 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload_3;
+					sconst_5;
+					sload_2;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokevirtual 76;		// update([BSS[BS)S
+					pop;
+					goto L38;
+				L36:	getfield_a_this 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload_3;
+					sconst_5;
+					sload_2;
+					aload_3;
+					sconst_0;
+					invokevirtual 77;		// doFinal([BSS[BS)S
+					sstore 10;
+				L37:	aload_1;
+					sconst_0;
+					sload 10;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+				L38:	goto_w L46;
+				L39:	bspush 6;
+					sload 7;
+					sconst_0;
+					invokestatic 73;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					checkcast 0 79;		// T_CLASSORINTERFACE javacard/security/RSAPrivateCrtKey
+					astore 9;
+				L40:	aload 9;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sconst_0;
+					sload 8;
+					sconst_2;
+					sdiv;
+					invokeinterface 4 79 11;		// javacard/security/RSAPrivateCrtKey
+					aload 9;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 8;
+					sconst_2;
+					sdiv;
+					sload 8;
+					sconst_2;
+					sdiv;
+					invokeinterface 4 79 13;		// javacard/security/RSAPrivateCrtKey
+					aload 9;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 8;
+					sload 8;
+					sconst_2;
+					sdiv;
+					invokeinterface 4 79 12;		// javacard/security/RSAPrivateCrtKey
+					aload 9;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 8;
+					sload 8;
+					sconst_2;
+					sdiv;
+					sadd;
+					sload 8;
+					sconst_2;
+					sdiv;
+					invokeinterface 4 79 9;		// javacard/security/RSAPrivateCrtKey
+					aload 9;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 8;
+					sconst_2;
+					smul;
+					sload 8;
+					sconst_2;
+					sdiv;
+					invokeinterface 4 79 10;		// javacard/security/RSAPrivateCrtKey
+					aload_3;
+					sconst_3;
+					baload;
+					ifne L42;
+				L41:	getfield_a_this 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload 9;
+					sconst_1;
+					invokevirtual 75;		// init(Ljavacard/security/Key;B)V
+				L42:	sload 5;
+					ifeq L44;
+				L43:	getfield_a_this 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload_3;
+					sconst_5;
+					sload_2;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokevirtual 76;		// update([BSS[BS)S
+					pop;
+					goto L46;
+				L44:	getfield_a_this 16;		// reference VotingSysMRR/VotingSysMRR.rsaCipher
+					aload_3;
+					sconst_5;
+					sload_2;
+					aload_3;
+					sconst_0;
+					invokevirtual 77;		// doFinal([BSS[BS)S
+					sstore 10;
+				L45:	aload_1;
+					sconst_0;
+					sload 10;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+				L46:	return;
+		}
+
+		.method private getRsaPubKey(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 4;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					sstore_2;
+				L1:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_3;
+				L2:	getfield_s_this 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					ifne L4;
+				L3:	sspush 27272;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L4:	getfield_s_this 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					sspush 160;
+					if_scmpgt L6;
+				L5:	sspush 128;
+					goto L7;
+				L6:	sspush 256;
+				L7:	sstore 4;
+				L8:	aload_3;
+					sconst_2;
+					baload;
+					slookupswitch L12 2 0 L9 1 L10;
+				L9:	getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					sconst_0;
+					aload_3;
+					sconst_0;
+					sload 4;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					sload 4;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					goto L13;
+				L10:	getfield_s_this 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					sload 4;
+					ssub;
+					sstore 5;
+				L11:	getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					sload 4;
+					aload_3;
+					sconst_0;
+					sload 5;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					sload 5;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					goto L13;
+				L12:	sspush 27270;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L13:	return;
+		}
+
+		.method private getRsaPriKeyComponent(B[BS)S {
+			.stack 5;
+			.locals 3;
+
+				L0:	getfield_s_this 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					ifne L2;
+				L1:	sconst_0;
+					sreturn;
+				L2:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifeq L8;
+				L3:	getfield_s_this 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					sspush 320;
+					if_scmpne L6;
+				L4:	sspush 128;
+					sstore 4;
+				L5:	goto L12;
+				L6:	sspush 256;
+					sstore 4;
+				L7:	goto L12;
+				L8:	getfield_s_this 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					sspush 256;
+					if_scmpne L11;
+				L9:	sspush 128;
+					sstore 4;
+				L10:	goto L12;
+				L11:	sspush 256;
+					sstore 4;
+				L12:	sload_1;
+					stableswitch L36 0 6 L13 L18 L21 L24 L27 L30 L33;
+				L13:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifeq L15;
+				L14:	sconst_0;
+					sreturn;
+				L15:	sconst_0;
+					sstore 5;
+				L16:	sload 4;
+					sstore 6;
+				L17:	goto L37;
+				L18:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifeq L20;
+				L19:	sconst_0;
+					sreturn;
+				L20:	sload 4;
+					sstore 5;
+					sload 4;
+					sstore 6;
+					goto L37;
+				L21:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifne L23;
+				L22:	sconst_0;
+					sreturn;
+				L23:	sconst_0;
+					sstore 5;
+					sload 4;
+					sconst_2;
+					sdiv;
+					sstore 6;
+					goto L37;
+				L24:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifne L26;
+				L25:	sconst_0;
+					sreturn;
+				L26:	sload 4;
+					sconst_2;
+					sdiv;
+					sstore 5;
+					sload 4;
+					sconst_2;
+					sdiv;
+					sstore 6;
+					goto L37;
+				L27:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifne L29;
+				L28:	sconst_0;
+					sreturn;
+				L29:	sload 4;
+					sstore 5;
+					sload 4;
+					sconst_2;
+					sdiv;
+					sstore 6;
+					goto L37;
+				L30:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifne L32;
+				L31:	sconst_0;
+					sreturn;
+				L32:	sload 4;
+					sconst_2;
+					sdiv;
+					sconst_3;
+					smul;
+					sstore 5;
+					sload 4;
+					sconst_2;
+					sdiv;
+					sstore 6;
+					goto L37;
+				L33:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifne L35;
+				L34:	sconst_0;
+					sreturn;
+				L35:	sload 4;
+					sconst_2;
+					smul;
+					sstore 5;
+					sload 4;
+					sconst_2;
+					sdiv;
+					sstore 6;
+					goto L37;
+				L36:	sconst_0;
+					sreturn;
+				L37:	getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 5;
+					aload_2;
+					sload_3;
+					sload 6;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					sload 6;
+					sreturn;
+		}
+
+		.method private getRsaPriKey(Ljavacard/framework/APDU;)V {
+			.stack 4;
+			.locals 3;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					sstore_2;
+				L1:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_3;
+				L2:	aload_3;
+					sconst_2;
+					baload;
+					sspush 255;
+					sand;
+					bspush 6;
+					if_scmple L4;
+				L3:	sspush 27270;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L4:	aload_0;
+					aload_3;
+					sconst_2;
+					baload;
+					aload_3;
+					sconst_0;
+					invokespecial 80;		// VotingSysMRR/VotingSysMRR.getRsaPriKeyComponent(B[BS)S
+					sstore 4;
+				L5:	sload 4;
+					ifne L7;
+				L6:	sspush 27272;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L7:	aload_1;
+					sconst_0;
+					sload 4;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method private setRsaPubKey(Ljavacard/framework/APDU;)V {
+			.stack 6;
+			.locals 4;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					sstore_2;
+				L1:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_3;
+				L2:	aload_3;
+					sconst_3;
+					baload;
+					ifne L4;
+				L3:	aload_0;
+					sconst_0;
+					putfield_s 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					aload_3;
+					sconst_1;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					sconst_3;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_3;
+					sconst_0;
+					invokestatic 81;		// javacard/framework/Util.setShort([BSS)S
+					pop;
+					goto L9;
+				L4:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					baload;
+					aload_3;
+					sconst_1;
+					baload;
+					if_scmpne L7;
+				L5:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_1;
+					baload;
+					bspush 127;
+					sand;
+					aload_3;
+					sconst_2;
+					baload;
+					bspush 127;
+					sand;
+					if_scmpne L7;
+				L6:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_2;
+					baload;
+					sspush 255;
+					sand;
+					aload_3;
+					sconst_3;
+					baload;
+					sspush 255;
+					sand;
+					sconst_1;
+					ssub;
+					if_scmpeq L8;
+				L7:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					sspush 27270;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L8:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_2;
+					dup2;
+					baload;
+					sconst_1;
+					sadd;
+					s2b;
+					bastore;
+				L9:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_3;
+					invokestatic 82;		// javacard/framework/Util.getShort([BS)S
+					sstore 4;
+				L10:	sload 4;
+					s2i;
+					sload_2;
+					s2i;
+					iadd;
+					getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					arraylength;
+					s2i;
+					icmp;
+					ifle L12;
+				L11:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					sspush 27264;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L12:	aload_3;
+					sconst_5;
+					getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					sload 4;
+					sload_2;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					sload 4;
+					sload_2;
+					sadd;
+					sstore 4;
+					aload_3;
+					sconst_2;
+					baload;
+					sspush 128;
+					sand;
+					ifne L22;
+				L13:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					aload_3;
+					sconst_2;
+					baload;
+					sconst_1;
+					sand;
+					ifne L15;
+				L14:	sspush 128;
+					goto L16;
+				L15:	sspush 256;
+				L16:	sstore 5;
+				L17:	sload 4;
+					s2i;
+					sload 5;
+					s2i;
+					iconst_3;
+					iadd;
+					icmp;
+					iflt L19;
+				L18:	sload 4;
+					s2i;
+					sload 5;
+					s2i;
+					bipush 32;
+					iadd;
+					icmp;
+					ifle L20;
+				L19:	sspush 27264;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L20:	aload_0;
+					sload 4;
+					putfield_s 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+				L21:	goto L23;
+				L22:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_3;
+					sload 4;
+					invokestatic 81;		// javacard/framework/Util.setShort([BSS)S
+					pop;
+				L23:	return;
+		}
+
+		.method private setRsaPriKey(Ljavacard/framework/APDU;)V {
+			.stack 6;
+			.locals 5;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					sstore_2;
+				L1:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_3;
+				L2:	aload_3;
+					sconst_3;
+					baload;
+					ifne L4;
+				L3:	aload_0;
+					sconst_0;
+					putfield_s 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					aload_3;
+					sconst_1;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					sconst_3;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_3;
+					sconst_0;
+					invokestatic 81;		// javacard/framework/Util.setShort([BSS)S
+					pop;
+					goto L9;
+				L4:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					baload;
+					aload_3;
+					sconst_1;
+					baload;
+					if_scmpne L7;
+				L5:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_1;
+					baload;
+					bspush 127;
+					sand;
+					aload_3;
+					sconst_2;
+					baload;
+					bspush 127;
+					sand;
+					if_scmpne L7;
+				L6:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_2;
+					baload;
+					sspush 255;
+					sand;
+					aload_3;
+					sconst_3;
+					baload;
+					sspush 255;
+					sand;
+					sconst_1;
+					ssub;
+					if_scmpeq L8;
+				L7:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					sspush 27270;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L8:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_2;
+					dup2;
+					baload;
+					sconst_1;
+					sadd;
+					s2b;
+					bastore;
+				L9:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_3;
+					invokestatic 82;		// javacard/framework/Util.getShort([BS)S
+					sstore 4;
+				L10:	sload 4;
+					s2i;
+					sload_2;
+					s2i;
+					iadd;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					arraylength;
+					s2i;
+					icmp;
+					ifle L12;
+				L11:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					sspush 27264;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L12:	aload_3;
+					sconst_5;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 4;
+					sload_2;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					sload 4;
+					sload_2;
+					sadd;
+					sstore 4;
+					aload_3;
+					sconst_2;
+					baload;
+					sspush 128;
+					sand;
+					ifne L28;
+				L13:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					aload_3;
+					sconst_2;
+					baload;
+					sconst_1;
+					sand;
+					ifne L15;
+				L14:	sspush 128;
+					goto L16;
+				L15:	sspush 256;
+				L16:	sstore 5;
+				L17:	aload_3;
+					sconst_2;
+					baload;
+					bspush 64;
+					sand;
+					ifeq L19;
+				L18:	sconst_1;
+					goto L20;
+				L19:	sconst_0;
+				L20:	sstore 6;
+				L21:	sload 6;
+					ifeq L23;
+				L22:	sload 4;
+					s2i;
+					sload 5;
+					s2i;
+					iconst_2;
+					idiv;
+					iconst_5;
+					imul;
+					icmp;
+					ifne L25;
+				L23:	sload 6;
+					ifne L26;
+				L24:	sload 4;
+					s2i;
+					sload 5;
+					s2i;
+					iconst_2;
+					imul;
+					icmp;
+					ifeq L26;
+				L25:	sspush 27264;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L26:	aload_0;
+					sload 6;
+					putfield_b 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					aload_0;
+					sload 4;
+					putfield_s 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+				L27:	goto L29;
+				L28:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_3;
+					sload 4;
+					invokestatic 81;		// javacard/framework/Util.setShort([BSS)S
+					pop;
+				L29:	return;
+		}
+
+		.method private genRsaKeyPair(Ljavacard/framework/APDU;)V {
+			.stack 4;
+			.locals 9;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					sstore_2;
+				L1:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_3;
+				L2:	aload_3;
+					sconst_2;
+					baload;
+					ifne L4;
+				L3:	sspush 1024;
+					goto L5;
+				L4:	sspush 2048;
+				L5:	sstore 4;
+				L6:	aload_3;
+					sconst_3;
+					baload;
+					ifne L8;
+				L7:	sconst_1;
+					goto L9;
+				L8:	sconst_2;
+				L9:	sstore 5;
+				L10:	new 83;		// javacard/security/KeyPair
+					dup;
+					sload 5;
+					sload 4;
+					invokespecial 84;		// javacard/security/KeyPair.<init>(BS)V
+					astore 6;
+				L11:	sload_2;
+					bspush 32;
+					if_scmple L13;
+				L12:	sspush 26368;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L13:	sload_2;
+					ifle L15;
+				L14:	aload 6;
+					invokevirtual 85;		// getPublic()Ljavacard/security/PublicKey;
+					checkcast 0 74;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					aload_3;
+					sconst_5;
+					sload_2;
+					invokeinterface 4 74 6;		// javacard/security/RSAPublicKey
+				L15:	aload 6;
+					invokevirtual 86;		// genKeyPair()V
+					invokestatic 87;		// javacard/framework/JCSystem.beginTransaction()V
+					aload_0;
+					sconst_0;
+					putfield_s 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					aload_0;
+					sconst_0;
+					putfield_s 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					invokestatic 88;		// javacard/framework/JCSystem.commitTransaction()V
+					aload 6;
+					invokevirtual 85;		// getPublic()Ljavacard/security/PublicKey;
+					checkcast 0 74;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					astore 7;
+				L16:	sconst_0;
+					sstore 8;
+				L17:	sload 8;
+					aload 7;
+					getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					sload 8;
+					invokeinterface 3 74 5;		// javacard/security/RSAPublicKey
+					sadd;
+					sstore 8;
+					sload 8;
+					aload 7;
+					getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					sload 8;
+					invokeinterface 3 74 4;		// javacard/security/RSAPublicKey
+					sadd;
+					sstore 8;
+					sconst_0;
+					sstore 9;
+				L18:	sload 5;
+					sconst_1;
+					if_scmpne L22;
+				L19:	aload_0;
+					sconst_0;
+					putfield_b 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					aload 6;
+					invokevirtual 89;		// getPrivate()Ljavacard/security/PrivateKey;
+					checkcast 0 78;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
+					astore 10;
+				L20:	sload 9;
+					aload 10;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 9;
+					invokeinterface 3 78 5;		// javacard/security/RSAPrivateKey
+					sadd;
+					sstore 9;
+					sload 9;
+					aload 10;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 9;
+					invokeinterface 3 78 4;		// javacard/security/RSAPrivateKey
+					sadd;
+					sstore 9;
+				L21:	goto L24;
+				L22:	aload_0;
+					sconst_1;
+					putfield_b 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					aload 6;
+					invokevirtual 89;		// getPrivate()Ljavacard/security/PrivateKey;
+					checkcast 0 79;		// T_CLASSORINTERFACE javacard/security/RSAPrivateCrtKey
+					astore 10;
+				L23:	sload 9;
+					aload 10;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 9;
+					invokeinterface 3 79 6;		// javacard/security/RSAPrivateCrtKey
+					sadd;
+					sstore 9;
+					sload 9;
+					aload 10;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 9;
+					invokeinterface 3 79 8;		// javacard/security/RSAPrivateCrtKey
+					sadd;
+					sstore 9;
+					sload 9;
+					aload 10;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 9;
+					invokeinterface 3 79 7;		// javacard/security/RSAPrivateCrtKey
+					sadd;
+					sstore 9;
+					sload 9;
+					aload 10;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 9;
+					invokeinterface 3 79 4;		// javacard/security/RSAPrivateCrtKey
+					sadd;
+					sstore 9;
+					sload 9;
+					aload 10;
+					getfield_a_this 11;		// reference VotingSysMRR/VotingSysMRR.rsaPriKey
+					sload 9;
+					invokeinterface 3 79 5;		// javacard/security/RSAPrivateCrtKey
+					sadd;
+					sstore 9;
+				L24:	invokestatic 87;		// javacard/framework/JCSystem.beginTransaction()V
+					aload_0;
+					sload 8;
+					putfield_s 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					aload_0;
+					sload 9;
+					putfield_s 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					invokestatic 88;		// javacard/framework/JCSystem.commitTransaction()V
+					invokestatic 25;		// javacard/framework/JCSystem.requestObjectDeletion()V
+					return;
+		}
+
+		.method private rsaSign(Ljavacard/framework/APDU;)V {
+			.stack 6;
+			.locals 6;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					sstore_2;
+				L1:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_3;
+				L2:	getfield_s_this 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					ifne L4;
+				L3:	sspush 27013;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L4:	aload_3;
+					sconst_2;
+					baload;
+					sspush 128;
+					sand;
+					ifeq L6;
+				L5:	sconst_1;
+					goto L7;
+				L6:	sconst_0;
+				L7:	sstore 4;
+				L8:	sconst_0;
+					sstore 5;
+				L9:	aload_3;
+					sconst_3;
+					baload;
+					ifne_w L20;
+				L10:	getfield_b_this 14;		// boolean VotingSysMRR/VotingSysMRR.isRSAPriKeyCRT
+					ifne L15;
+				L11:	sconst_5;
+					getfield_s_this 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					sconst_2;
+					sdiv;
+					bspush 8;
+					smul;
+					sconst_0;
+					invokestatic 73;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					astore 6;
+				L12:	aload_0;
+					sconst_0;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokespecial 80;		// VotingSysMRR/VotingSysMRR.getRsaPriKeyComponent(B[BS)S
+					sstore 7;
+				L13:	aload 6;
+					checkcast 0 78;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					sload 7;
+					invokeinterface 4 78 7;		// javacard/security/RSAPrivateKey
+					aload_0;
+					sconst_1;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokespecial 80;		// VotingSysMRR/VotingSysMRR.getRsaPriKeyComponent(B[BS)S
+					sstore 7;
+					aload 6;
+					checkcast 0 78;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					sload 7;
+					invokeinterface 4 78 6;		// javacard/security/RSAPrivateKey
+				L14:	goto_w L18;
+				L15:	bspush 6;
+					getfield_s_this 13;		// short VotingSysMRR/VotingSysMRR.rsaPriKeyLen
+					sconst_5;
+					sdiv;
+					bspush 16;
+					smul;
+					sconst_0;
+					invokestatic 73;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					astore 6;
+				L16:	aload_0;
+					sconst_2;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokespecial 80;		// VotingSysMRR/VotingSysMRR.getRsaPriKeyComponent(B[BS)S
+					sstore 7;
+				L17:	aload 6;
+					checkcast 0 79;		// T_CLASSORINTERFACE javacard/security/RSAPrivateCrtKey
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					sload 7;
+					invokeinterface 4 79 11;		// javacard/security/RSAPrivateCrtKey
+					aload_0;
+					sconst_3;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokespecial 80;		// VotingSysMRR/VotingSysMRR.getRsaPriKeyComponent(B[BS)S
+					sstore 7;
+					aload 6;
+					checkcast 0 79;		// T_CLASSORINTERFACE javacard/security/RSAPrivateCrtKey
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					sload 7;
+					invokeinterface 4 79 13;		// javacard/security/RSAPrivateCrtKey
+					aload_0;
+					sconst_5;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokespecial 80;		// VotingSysMRR/VotingSysMRR.getRsaPriKeyComponent(B[BS)S
+					sstore 7;
+					aload 6;
+					checkcast 0 79;		// T_CLASSORINTERFACE javacard/security/RSAPrivateCrtKey
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					sload 7;
+					invokeinterface 4 79 9;		// javacard/security/RSAPrivateCrtKey
+					aload_0;
+					bspush 6;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokespecial 80;		// VotingSysMRR/VotingSysMRR.getRsaPriKeyComponent(B[BS)S
+					sstore 7;
+					aload 6;
+					checkcast 0 79;		// T_CLASSORINTERFACE javacard/security/RSAPrivateCrtKey
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					sload 7;
+					invokeinterface 4 79 10;		// javacard/security/RSAPrivateCrtKey
+					aload_0;
+					sconst_4;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					invokespecial 80;		// VotingSysMRR/VotingSysMRR.getRsaPriKeyComponent(B[BS)S
+					sstore 7;
+					aload 6;
+					checkcast 0 79;		// T_CLASSORINTERFACE javacard/security/RSAPrivateCrtKey
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					sload 7;
+					invokeinterface 4 79 12;		// javacard/security/RSAPrivateCrtKey
+				L18:	aload_0;
+					bspush 40;
+					sconst_0;
+					invokestatic 90;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
+					putfield_a 15;		// reference VotingSysMRR/VotingSysMRR.rsaSignature
+					invokestatic 25;		// javacard/framework/JCSystem.requestObjectDeletion()V
+					getfield_a_this 15;		// reference VotingSysMRR/VotingSysMRR.rsaSignature
+					aload 6;
+					sconst_1;
+					invokevirtual 91;		// init(Ljavacard/security/Key;B)V
+					aload_3;
+					sconst_1;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					sconst_3;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					invokestatic 25;		// javacard/framework/JCSystem.requestObjectDeletion()V
+				L19:	goto L25;
+				L20:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					baload;
+					aload_3;
+					sconst_1;
+					baload;
+					if_scmpne L23;
+				L21:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_1;
+					baload;
+					bspush 127;
+					sand;
+					aload_3;
+					sconst_2;
+					baload;
+					bspush 127;
+					sand;
+					if_scmpne L23;
+				L22:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_2;
+					baload;
+					sspush 255;
+					sand;
+					aload_3;
+					sconst_3;
+					baload;
+					sspush 255;
+					sand;
+					sconst_1;
+					ssub;
+					if_scmpeq L24;
+				L23:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					sspush 27270;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L24:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_2;
+					dup2;
+					baload;
+					sconst_1;
+					sadd;
+					s2b;
+					bastore;
+				L25:	sload 4;
+					ifeq L27;
+				L26:	getfield_a_this 15;		// reference VotingSysMRR/VotingSysMRR.rsaSignature
+					aload_3;
+					sconst_5;
+					sload_2;
+					invokevirtual 92;		// update([BSS)V
+					goto L29;
+				L27:	getfield_a_this 15;		// reference VotingSysMRR/VotingSysMRR.rsaSignature
+					aload_3;
+					sconst_5;
+					sload_2;
+					aload_3;
+					sconst_0;
+					invokevirtual 93;		// sign([BSS[BS)S
+					sstore 6;
+				L28:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					aload_1;
+					sconst_0;
+					sload 6;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+				L29:	return;
+		}
+
+		.method private rsaVerify(Ljavacard/framework/APDU;)V {
+			.stack 7;
+			.locals 8;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 62;		// setIncomingAndReceive()S
+					sstore_2;
+				L1:	aload_1;
+					invokevirtual 35;		// getBuffer()[B
+					astore_3;
+				L2:	getfield_s_this 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					ifne L4;
+				L3:	sspush 27013;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L4:	aload_3;
+					sconst_2;
+					baload;
+					sspush 128;
+					sand;
+					ifeq L6;
+				L5:	sconst_1;
+					goto L7;
+				L6:	sconst_0;
+				L7:	sstore 4;
+				L8:	sconst_0;
+					sstore 5;
+				L9:	sconst_5;
+					sstore 6;
+				L10:	getfield_s_this 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					sspush 256;
+					if_scmple L12;
+				L11:	sspush 256;
+					goto L13;
+				L12:	sspush 128;
+				L13:	sstore 7;
+				L14:	aload_3;
+					sconst_3;
+					baload;
+					ifne L18;
+				L15:	sconst_4;
+					sload 7;
+					bspush 8;
+					smul;
+					sconst_0;
+					invokestatic 73;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					astore 8;
+				L16:	aload 8;
+					checkcast 0 74;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					sconst_0;
+					sload 7;
+					invokeinterface 4 74 7;		// javacard/security/RSAPublicKey
+					aload 8;
+					checkcast 0 74;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					getfield_a_this 10;		// reference VotingSysMRR/VotingSysMRR.rsaPubKey
+					sload 7;
+					getfield_s_this 12;		// short VotingSysMRR/VotingSysMRR.rsaPubKeyLen
+					sload 7;
+					ssub;
+					invokeinterface 4 74 6;		// javacard/security/RSAPublicKey
+					aload_0;
+					bspush 40;
+					sconst_0;
+					invokestatic 90;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
+					putfield_a 15;		// reference VotingSysMRR/VotingSysMRR.rsaSignature
+					invokestatic 25;		// javacard/framework/JCSystem.requestObjectDeletion()V
+					getfield_a_this 15;		// reference VotingSysMRR/VotingSysMRR.rsaSignature
+					aload 8;
+					sconst_2;
+					invokevirtual 91;		// init(Ljavacard/security/Key;B)V
+					aload_3;
+					sconst_1;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					sconst_3;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_3;
+					sconst_0;
+					invokestatic 81;		// javacard/framework/Util.setShort([BSS)S
+					pop;
+					invokestatic 25;		// javacard/framework/JCSystem.requestObjectDeletion()V
+				L17:	goto L23;
+				L18:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					baload;
+					aload_3;
+					sconst_1;
+					baload;
+					if_scmpne L21;
+				L19:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_1;
+					baload;
+					bspush 127;
+					sand;
+					aload_3;
+					sconst_2;
+					baload;
+					bspush 127;
+					sand;
+					if_scmpne L21;
+				L20:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_2;
+					baload;
+					sspush 255;
+					sand;
+					aload_3;
+					sconst_3;
+					baload;
+					sspush 255;
+					sand;
+					sconst_1;
+					ssub;
+					if_scmpeq L22;
+				L21:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					sspush 27270;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L22:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_2;
+					dup2;
+					baload;
+					sconst_1;
+					sadd;
+					s2b;
+					bastore;
+				L23:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_3;
+					invokestatic 82;		// javacard/framework/Util.getShort([BS)S
+					sstore 8;
+				L24:	sload 8;
+					sload 7;
+					if_scmpge L29;
+				L25:	sload 7;
+					sload 8;
+					ssub;
+					sstore 9;
+				L26:	sload 9;
+					sload_2;
+					if_scmple L28;
+				L27:	sload_2;
+					sstore 9;
+				L28:	aload_3;
+					sconst_5;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sload 8;
+					sload 9;
+					invokestatic 64;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
+					pop;
+					sload 8;
+					sload 9;
+					sadd;
+					sstore 8;
+					sload_2;
+					sload 9;
+					ssub;
+					sstore_2;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_3;
+					sload 8;
+					invokestatic 81;		// javacard/framework/Util.setShort([BSS)S
+					pop;
+					sload 6;
+					sload 9;
+					sadd;
+					sstore 6;
+				L29:	sload 4;
+					ifeq L32;
+				L30:	sload_2;
+					ifle L39;
+				L31:	getfield_a_this 15;		// reference VotingSysMRR/VotingSysMRR.rsaSignature
+					aload_3;
+					sload 6;
+					sload_2;
+					invokevirtual 92;		// update([BSS)V
+					goto L39;
+				L32:	sload 8;
+					sload 7;
+					if_scmpeq L34;
+				L33:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					sspush 27264;
+					invokestatic 37;		// javacard/framework/ISOException.throwIt(S)V
+				L34:	getfield_a_this 15;		// reference VotingSysMRR/VotingSysMRR.rsaSignature
+					aload_3;
+					sload 6;
+					sload_2;
+					getfield_a_this 8;		// reference VotingSysMRR/VotingSysMRR.tempBuffer
+					sconst_0;
+					sload 8;
+					invokevirtual 94;		// verify([BSS[BSS)Z
+					sstore 9;
+				L35:	getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					sconst_0;
+					getfield_a_this 9;		// reference VotingSysMRR/VotingSysMRR.flags
+					arraylength;
+					sconst_0;
+					invokestatic 72;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					aload_3;
+					sconst_0;
+					sload 9;
+					ifeq L37;
+				L36:	sconst_1;
+					goto L38;
+				L37:	sconst_0;
+				L38:	bastore;
+					aload_1;
+					sconst_0;
+					sconst_1;
+					invokevirtual 65;		// setOutgoingAndSend(SS)V
+				L39:	return;
+		}
+
+	}
+
+}
